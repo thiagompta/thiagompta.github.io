@@ -836,21 +836,111 @@ footer {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--text3); border-radius: 2px; }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.nav-mobile-open {
+  display: flex !important;
+  flex-direction: column;
+  position: fixed;
+  top: 57px; left: 0; right: 0;
+  background: rgba(8,12,16,0.98);
+  padding: 24px;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+  z-index: 99;
+}
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  nav { padding: 16px 20px; }
-  .nav-links { gap: 20px; }
-  .hero { padding: 100px 20px 60px; }
+  nav {
+    padding: 14px 16px;
+  }
+
+  .nav-logo {
+    font-size: 15px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+  }
+
+  .hero {
+    padding: 100px 20px 60px;
+  }
+
   .hero-visual { display: none; }
+
+  .hero h1 {
+    font-size: clamp(42px, 12vw, 64px);
+    letter-spacing: -2px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
   section { padding: 70px 20px; }
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
   .projects-grid { grid-template-columns: 1fr; }
   .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
   .project-visual { display: none; }
-  .hero-stats { gap: 24px; }
   .contact-section { padding: 80px 20px; }
   footer { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .nav-links { display: none; }
+
+  nav {
+    justify-content: center;
+  }
+
+  .nav-logo { font-size: 16px; }
+
+  .hero-stats {
+    gap: 16px;
+  }
+
+  .stat-num { font-size: 24px; }
+
+  .skills-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -866,6 +956,9 @@ footer {
     <li><a href="#experiencia">experiência</a></li>
     <li><a href="#contato">contato</a></li>
   </ul>
+  <button class="hamburger" onclick="toggleMenu()" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1290,5 +1383,11 @@ window.addEventListener('scroll', () => {
   });
 });
 </script>
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const btn = document.getElementById('hamburger');
+    links.classList.toggle('nav-mobile-open');
+    btn.classList.toggle('open');
+  }
 </body>
 </html>
